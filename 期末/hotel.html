@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>酒店住宿 - 老君山</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{--primary-color:#c8102e;--bg:#f8f9fa}
+        body{font-family:"Noto Sans SC",sans-serif;background:var(--bg)}
+        #header-nav{position:fixed;top:0;left:0;width:100%;height:60px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 50px;z-index:1000}
+        .nav-logo{color:var(--primary-color);font-size:22px;font-weight:700;text-decoration:none}
+        #main-nav{display:flex;list-style:none}
+        .main-nav-item{margin-left:35px}
+        .main-nav-link{color:#333;text-decoration:none}
+        .container{max-width:1000px;margin:0 auto;padding:100px 20px}
+        .card{background:#fff;padding:20px;border-radius:12px;margin-bottom:20px}
+        .title{font-size:20px;margin-bottom:10px}
+        .btn{background:var(--primary-color);color:#fff;border:none;padding:10px 15px;border-radius:6px;cursor:pointer}
+    </style>
+</head>
+<body>
+    <nav id="header-nav">
+        <a href="index.html" class="nav-logo">老君山</a>
+        <ul id="main-nav">
+            <li class="main-nav-item"><a href="index.html">首页</a></li>
+            <li class="main-nav-item"><a href="scenery.html">景点</a></li>
+            <li class="main-nav-item"><a href="ticket.html">门票</a></li>
+            <li class="main-nav-item"><a href="hotel.html">酒店</a></li>
+            <li class="main-nav-item"><a href="comment.html">评价</a></li>
+            <li class="main-nav-item"><a href="user.html">我的</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h2 style="color:var(--primary-color);margin-bottom:20px">酒店住宿预订</h2>
+        <div class="card">
+            <div class="title">老君山精品民宿</div>
+            <p>价格：¥280/晚</p>
+            <button class="btn" onclick="book('民宿',280)">立即预订</button>
+        </div>
+        <div class="card">
+            <div class="title">景区观景酒店</div>
+            <p>价格：¥480/晚</p>
+            <button class="btn" onclick="book('酒店',480)">立即预订</button>
+        </div>
+    </div>
+
+    <script>
+        function book(name,price){
+            localStorage.setItem('hotel',name+' '+price+'元');
+            alert('预订成功！');
+        }
+    </script>
+</body>
+</html>

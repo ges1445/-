@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="description" content="老君山——天下无双圣境，世界第一仙山。国家5A级旅游景区，位于河南省洛阳市栾川县，以金顶道观群、十里画屏、云海日出闻名天下。">
+    <meta name="keywords" content="老君山,洛阳老君山,栾川老君山,金顶,十里画屏,云海日出">
+    <title>老君山 · 天下第一仙山</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:400,500,700&display=swap">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-color: #c8102e;
+            --primary-light: #ff5252;
+            --primary-dark: #9a0007;
+            --text-color: #333;
+            --text-light: #666;
+            --bg-color: #f8f9fa;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --border-color: #e9ecef;
+            --shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        body { font-family: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--text-color); line-height: 1.6; overflow-x: hidden; background-color: var(--bg-color); }
+        #dynamic-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: url('背景.jpg') no-repeat center center; background-size: cover; }
+        #dynamic-bg::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(248, 249, 250, 0.85); }
+        .cloud { position: absolute; width: 200%; height: 100%; background: url('背景.jpg') no-repeat center center; background-size: cover; opacity: 0.15; animation: cloudMove 60s linear infinite; }
+        .cloud:nth-child(2) { animation-delay: -30s; opacity: 0.1; }
+        @keyframes cloudMove { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        #particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+        .particle { position: absolute; width: 4px; height: 4px; background-color: var(--primary-light); border-radius: 50%; opacity: 0.6; animation: float 15s infinite ease-in-out; }
+        @keyframes float { 0%,100% { transform: translateY(0) translateX(0); opacity:0.6; } 50% { transform: translateY(-100px) translateX(50px); opacity:0.2; } }
+        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s, visibility 0.5s; }
+        #loader.loading { opacity: 0; visibility: hidden; }
+        .loading-taichi { width: 120px; height: 120px; margin-bottom: 20px; animation: rotate 2s linear infinite; }
+        .loading-word { font-size: 18px; color: var(--primary-color); letter-spacing: 2px; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        #header-nav {
+            position: fixed; top: 0; left: 0; width: 100%; height: 60px; background: rgba(255,255,255,0.95);
+            box-shadow: var(--shadow); z-index: 1000; display: flex; align-items: center; justify-content: space-between;
+            padding: 0 50px; transition: background 0.3s, box-shadow 0.3s;
+        }
+        .nav-logo { font-size: 22px; font-weight: 700; color: var(--primary-color); text-decoration: none; }
+        #main-nav { display: flex; list-style: none; }
+        .main-nav-item { margin-left: 35px; }
+        .main-nav-link { color: var(--text-color); text-decoration: none; font-size: 16px; font-weight: 500; padding: 8px 0; border-bottom: 2px solid transparent; transition: var(--transition); }
+        .main-nav-link:hover { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+
+        #hero {
+            width: 100%; height: 100vh; padding-top: 60px; box-sizing: border-box;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('开头.jpg') no-repeat center center;
+            background-size: cover; display: flex; align-items: center; justify-content: center;
+            text-align: center; color: #fff; position: relative;
+        }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-title { font-size: 64px; font-weight: 700; margin-bottom: 20px; letter-spacing: 8px; text-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        .hero-subtitle { font-size: 24px; margin-bottom: 40px; opacity: 0.9; text-shadow: 0 2px 10px rgba(0,0,0,0.5); height: 30px; }
+        .cursor { animation: blink 0.8s infinite; }
+        @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
+        .hero-btn {
+            display: inline-block; padding: 14px 40px; background: var(--primary-color); color: #fff;
+            text-decoration: none; font-size: 18px; font-weight: 500; border-radius: 50px;
+            transition: var(--transition); box-shadow: 0 4px 15px rgba(200,16,46,0.3);
+        }
+        .hero-btn:hover { background: var(--primary-dark); transform: translateY(-3px); box-shadow: 0 6px 20px rgba(200,16,46,0.4); }
+
+        #container { max-width: 1300px; margin: 0 auto; padding: 80px 20px; display: grid; grid-template-columns: 320px 1fr; gap: 40px; }
+        #sidebar { position: sticky; top: 80px; align-self: start; }
+        .sidebar-card { background: var(--card-bg); border-radius: 12px; box-shadow: var(--shadow); padding: 25px; margin-bottom: 30px; backdrop-filter: blur(10px); }
+        .sidebar-title { font-size: 20px; font-weight: 600; color: var(--primary-color); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--primary-color); }
+        .sidebar-list { list-style: none; }
+        .sidebar-item { margin-bottom: 12px; }
+        .sidebar-link { color: var(--text-color); text-decoration: none; display: block; padding: 8px 0; border-radius: 4px; transition: var(--transition); }
+        .sidebar-link:hover { color: var(--primary-color); background: rgba(200,16,46,0.05); padding-left: 10px; }
+        .quick-info { margin-top: 15px; }
+        .info-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border-color); }
+        .info-label { color: var(--text-light); }
+        .info-value { font-weight: 500; }
+
+        #main-content { background: var(--card-bg); border-radius: 12px; box-shadow: var(--shadow); padding: 40px; backdrop-filter: blur(10px); }
+        .section { margin-bottom: 60px; }
+        .section:last-child { margin-bottom: 0; }
+        .section-title { font-size: 28px; font-weight: 600; color: var(--primary-color); margin-bottom: 25px; padding-bottom: 12px; border-bottom: 3px solid var(--primary-color); display: inline-block; }
+        .section-text { font-size: 16px; line-height: 1.8; color: var(--text-color); margin-bottom: 20px; text-align: justify; }
+
+        .scenery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 30px; }
+        .scenery-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); transition: var(--transition); backdrop-filter: blur(10px); }
+        .scenery-card:hover { transform: translateY(-8px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
+        .scenery-img { width: 100%; height: 220px; object-fit: cover; background-color: #eee; }
+        .scenery-info { padding: 20px; }
+        .scenery-name { font-size: 20px; font-weight: 600; margin-bottom: 10px; }
+        .scenery-desc { color: var(--text-light); line-height: 1.6; }
+
+        .strategy-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .strategy-table th, .strategy-table td { padding: 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        .strategy-table th { background: rgba(200,16,46,0.05); font-weight: 600; color: var(--primary-color); }
+
+        #footer { background: rgba(34,34,34,0.95); color: #fff; padding: 50px 0; text-align: center; backdrop-filter: blur(10px); }
+        .footer-content { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .footer-logo { font-size: 24px; font-weight: 700; margin-bottom: 20px; color: var(--primary-light); }
+        .footer-text { color: #aaa; margin-bottom: 15px; }
+        .footer-copyright { color: #666; font-size: 14px; margin-top: 30px; }
+
+        #back-to-top {
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background: var(--primary-color);
+            color: #fff; border: none; border-radius: 50%; font-size: 20px; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(200,16,46,0.3); transition: var(--transition); opacity: 0; visibility: hidden; z-index: 999;
+        }
+        #back-to-top.show { opacity: 1; visibility: visible; }
+        #back-to-top:hover { background: var(--primary-dark); transform: translateY(-3px); }
+
+        /* ========== 我给你加的：个人中心按钮 ========== */
+        #to-user {
+            position: fixed; bottom: 90px; right: 30px; width: 50px; height: 50px; 
+            background: #ff9800; color: #fff; border: none; border-radius: 50%; 
+            font-size: 22px; cursor: pointer; z-index: 999;
+            box-shadow: 0 4px 15px rgba(255,152,0,0.4);
+            transition: all 0.3s ease;
+        }
+        #to-user:hover {
+            background: #f57c00; transform: translateY(-3px);
+        }
+
+        @media (max-width: 992px) {
+            #container { grid-template-columns: 1fr; }
+            #sidebar { position: static; margin-bottom: 40px; }
+            .hero-title { font-size: 48px; }
+            .hero-subtitle { font-size: 20px; }
+        }
+        @media (max-width: 768px) {
+            #header-nav { padding: 0 20px; }
+            .main-nav-item { margin-left: 20px; }
+            .hero-title { font-size: 36px; letter-spacing: 4px; }
+            #main-content { padding: 25px; }
+            .scenery-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div id="dynamic-bg">
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+    </div>
+    <div id="particles"></div>
+
+    <div id="loader">
+        <svg class="loading-taichi" viewBox="0 0 1024 1024">
+            <path d="M512 64a448 448 0 0 1 0 896 448 448 0 0 1 0-896zm0 32a416 416 0 0 1 0 832 208 208 0 0 1 0-416 208 208 0 0 0 0-416 416 416 0 0 0 0-416z" fill="var(--primary-color)"/>
+            <path d="M304 432a80 80 0 1 1 0 160 80 80 0 0 1 0-160z" fill="var(--primary-color)"/>
+        </svg>
+        <div class="loading-word">仙山加载中...</div>
+    </div>
+
+    <nav id="header-nav">
+        <a href="#" class="nav-logo">老君山</a>
+        <ul id="main-nav">
+            <li class="main-nav-item"><a href="#overview" class="main-nav-link">景区概况</a></li>
+            <li class="main-nav-item"><a href="#scenery" class="main-nav-link">核心景点</a></li>
+            <li class="main-nav-item"><a href="#strategy" class="main-nav-link">游玩攻略</a></li>
+            <li class="main-nav-item"><a href="#food" class="main-nav-link">美食特产</a></li>
+            <li class="main-nav-item"><a href="#traffic" class="main-nav-link">交通指南</a></li>
+        </ul>
+    </nav>
+
+    <section id="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">天下第一仙山</h1>
+            <p class="hero-subtitle">
+                <span id="typewriter"></span><span class="cursor">|</span>
+            </p>
+            <a href="#overview" class="hero-btn">开启仙山之旅</a>
+        </div>
+    </section>
+
+    <div id="container">
+        <aside id="sidebar">
+            <div class="sidebar-card">
+                <h3 class="sidebar-title">快速导航</h3>
+                <ul class="sidebar-list">
+                    <li class="sidebar-item"><a href="#overview" class="sidebar-link">景区概况</a></li>
+                    <li class="sidebar-item"><a href="#scenery" class="sidebar-link">核心景点</a></li>
+                    <li class="sidebar-item"><a href="#strategy" class="sidebar-link">游玩攻略</a></li>
+                    <li class="sidebar-item"><a href="#food" class="sidebar-link">美食特产</a></li>
+                    <li class="sidebar-item"><a href="#traffic" class="sidebar-link">交通指南</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-card">
+                <h3 class="sidebar-title">景区基本信息</h3>
+                <div class="quick-info">
+                    <div class="info-item"><span class="info-label">景区等级</span><span class="info-value">国家AAAAA级</span></div>
+                    <div class="info-item"><span class="info-label">地理位置</span><span class="info-value">河南洛阳栾川</span></div>
+                    <div class="info-item"><span class="info-label">海拔高度</span><span class="info-value">2217米</span></div>
+                    <div class="info-item"><span class="info-label">开放时间</span><span class="info-value">08:00-18:00</span></div>
+                    <div class="info-item"><span class="info-label">门票价格</span><span class="info-value">100元/人</span></div>
+                    <div class="info-item"><span class="info-label">建议游玩</span><span class="info-value">1-2天</span></div>
+                </div>
+            </div>
+            <div class="sidebar-card">
+                <h3 class="sidebar-title">热门打卡点</h3>
+                <ul class="sidebar-list">
+                    <li class="sidebar-item"><a href="#jinding" class="sidebar-link">金顶道观群</a></li>
+                    <li class="sidebar-item"><a href="#shili" class="sidebar-link">十里画屏</a></li>
+                    <li class="sidebar-item"><a href="#yunhai" class="sidebar-link">云海日出</a></li>
+                    <li class="sidebar-item"><a href="#zhuimeng" class="sidebar-link">追梦谷</a></li>
+                    <li class="sidebar-item"><a href="#laojun" class="sidebar-link">老君庙</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main id="main-content">
+            <section id="overview" class="section">
+                <h2 class="section-title">景区概况</h2>
+                <p class="section-text">老君山原名景室山，位于河南省洛阳市栾川县城东南3千米处，是秦岭余脉八百里伏牛山的主峰，海拔高达2217米。因西周时期"守藏室史"李耳到此归隐修炼，被道教尊为太上老君，唐太宗赐名"老君山"，成为道教主流全真派圣地。</p>
+                <p class="section-text">老君山景区总面积26.66平方公里，是国家AAAAA级旅游景区、国家级自然保护区、世界地质公园。以独特的“滑脱峰林”地貌、壮观的花岗岩峰林、云海日出和金顶道观群闻名，被誉为“天下无双圣境，世界第一仙山”。</p>
+                <p class="section-text">老君山道教文化源远流长，自然景观与道教庙宇完美融合，四季景色各异，冬雪与金顶灯光秀已成为网红打卡胜地。</p>
+            </section>
+
+            <section id="scenery" class="section">
+                <h2 class="section-title">核心景点</h2>
+                <div class="scenery-grid">
+                    <div class="scenery-card" id="jinding">
+                        <img src="金顶道观群.png" alt="金顶道观群" class="scenery-img">
+                        <div class="scenery-info"><h3 class="scenery-name">金顶道观群</h3><p class="scenery-desc">老君山标志建筑，五座金殿黄铜装饰，阳光与灯光下金光璀璨，宛如仙境。</p></div>
+                    </div>
+                    <div class="scenery-card" id="shili">
+                        <img src="十里画屏.png" alt="十里画屏" class="scenery-img">
+                        <div class="scenery-info"><h3 class="scenery-name">十里画屏</h3><p class="scenery-desc">十里花岗岩峰林，一步一景，被誉为“北国张家界”。</p></div>
+                    </div>
+                    <div class="scenery-card" id="yunhai">
+                        <img src="云海日出.png" alt="云海日出" class="scenery-img">
+                        <div class="scenery-info"><h3 class="scenery-name">云海日出</h3><p class="scenery-desc">清晨云海翻腾，红日升起，金光洒遍群山，摄影爱好者的天堂。</p></div>
+                    </div>
+                    <div class="scenery-card" id="zhuimeng">
+                        <img src="追梦谷.png" alt="追梦谷" class="scenery-img">
+                        <div class="scenery-info"><h3 class="scenery-name">追梦谷</h3><p class="scenery-desc">13公里峡谷，溪水瀑布，森林茂密，还有玻璃栈道、滑索等娱乐项目。</p></div>
+                    </div>
+                    <div class="scenery-card" id="laojun">
+                        <img src="老君庙.png" alt="老君庙" class="scenery-img">
+                        <div class="scenery-info"><h3 class="scenery-name">老君庙</h3><p class="scenery-desc">始建于北魏，1500多年历史，供奉太上老君，香火旺盛。</p></div>
+                    </div>
+                    <div class="scenery-card">
+                        <img src="马鬃峰.png" alt="马鬃岭" class="scenery-img">
+                        <div class="scenery-info"><h3 class="scenery-name">马鬃岭</h3><p class="scenery-desc">最高峰，形似马鬃，俯瞰全景，观云海日落的最佳地点。</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="strategy" class="section">
+                <h2 class="section-title">游玩攻略</h2>
+                <table class="strategy-table">
+                    <tr><th>项目</th><th>详细信息</th></tr>
+                    <tr><td>最佳时间</td><td>4-5月、9-11月、12-2月（雪景）</td></tr>
+                    <tr><td>门票</td><td>成人100元，学生50元，老人50元（70以上免费），索道另计</td></tr>
+                    <tr><td>路线</td><td>一日游：索道→十里画屏→金顶；二日游：追梦谷+日出</td></tr>
+                    <tr><td>注意</td><td>带外套、运动鞋，关注天气，可自带饮食</td></tr>
+                </table>
+            </section>
+
+            <section id="food" class="section">
+                <h2 class="section-title">美食特产</h2>
+                <p class="section-text">栾川美食以豫西风味为主，食材天然。</p>
+                <div class="scenery-grid">
+                    <div class="scenery-card"><div class="scenery-info"><h3 class="scenery-name">栾川豆腐</h3><p class="scenery-desc">山泉水制作，细腻豆香，可拌可炖。</p></div></div>
+                    <div class="scenery-card"><div class="scenery-info"><h3 class="scenery-name">烩面</h3><p class="scenery-desc">汤浓面筋，羊肉牛肉皆可，必吃美食。</p></div></div>
+                    <div class="scenery-card"><div class="scenery-info"><h3 class="scenery-name">山野菜</h3><p class="scenery-desc">荠菜、蒲公英等，绿色健康。</p></div></div>
+                    <div class="scenery-card"><div class="scenery-info"><h3 class="scenery-name">柿子醋</h3><p class="scenery-desc">当地柿子酿造，酸甜开胃，健康礼品。</p></div></div>
+                </div>
+            </section>
+
+            <section id="traffic" class="section">
+                <h2 class="section-title">交通指南</h2>
+                <p class="section-text">老君山位于洛阳栾川，交通便利。</p>
+                <h3 style="margin:20px 0 10px; color:var(--primary-color);">公共交通</h3>
+                <p class="section-text">飞机至洛阳北郊机场，高铁至洛阳龙门站，再转汽车约2-2.5小时；洛阳汽车站有直达班车。</p>
+                <h3 style="margin:20px 0 10px; color:var(--primary-color);">自驾路线</h3>
+                <p class="section-text">郑州/洛阳方向经洛栾高速至栾川站下；西安方向连霍高速转洛栾高速。</p>
+            </section>
+        </main>
+    </div>
+
+    <footer id="footer">
+        <div class="footer-content">
+            <div class="footer-logo">老君山 · 天下第一仙山</div>
+            <p class="footer-text">国家AAAAA级旅游景区 | 国家级自然保护区 | 世界地质公园</p>
+            <p class="footer-text">地址：河南省洛阳市栾川县栾川乡老君山景区</p>
+            <p class="footer-text">电话：0379-66838888</p>
+            <div class="footer-copyright">© 2026 老君山旅游宣传官网 | 期末作业设计</div>
+        </div>
+    </footer>
+
+    <button id="to-user" title="个人中心">个人</button>
+    <button id="back-to-top">↑</button>
+
+    <script>
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = Math.random() * 100 + '%';
+                p.style.animationDelay = Math.random() * 15 + 's';
+                p.style.animationDuration = (10 + Math.random() * 10) + 's';
+                container.appendChild(p);
+            }
+        }
+
+        function typeWriter() {
+            const texts = ["远赴人间惊鸿宴，一睹老君盛世颜","天下无双圣境，世界第一仙山","道教圣地，千年文化传承"];
+            let textIndex = 0, charIndex = 0, isDeleting = false;
+            const el = document.getElementById('typewriter');
+            function type() {
+                const current = texts[textIndex];
+                el.textContent = isDeleting ? current.substring(0, charIndex - 1) : current.substring(0, charIndex + 1);
+                charIndex += isDeleting ? -1 : 1;
+                let speed = isDeleting ? 50 : 100;
+                if (!isDeleting && charIndex === current.length) { speed = 2000; isDeleting = true; }
+                else if (isDeleting && charIndex === 0) { isDeleting = false; textIndex = (textIndex + 1) % texts.length; speed = 500; }
+                setTimeout(type, speed);
+            }
+            type();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            typeWriter();
+            setTimeout(() => document.getElementById('loader').classList.add('loading'), 800);
+        });
+
+       
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const top = target.getBoundingClientRect().top + window.pageYOffset - 70;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                }
+            });
+        });
+
+        const backBtn = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            backBtn.classList.toggle('show', window.pageYOffset > 300);
+            const nav = document.getElementById('header-nav');
+            if (window.pageYOffset > 50) {
+                nav.style.background = 'rgba(255,255,255,0.98)';
+                nav.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+            } else {
+                nav.style.background = 'rgba(255,255,255,0.95)';
+                nav.style.boxShadow = '0 2px 15px rgba(0,0,0,0.08)';
+            }
+        });
+        backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        document.getElementById('to-user').onclick = function(){
+            location.href = 'user.html';
+        };
+
+        document.addEventListener('click', function(e) {
+            const firework = document.createElement('div');
+            Object.assign(firework.style, {
+                position: 'fixed', left: e.clientX + 'px', top: e.clientY + 'px',
+                width: '10px', height: '10px', background: 'var(--primary-light)',
+                borderRadius: '50%', pointerEvents: 'none', zIndex: '9999',
+                animation: 'firework 0.6s ease-out forwards'
+            });
+            document.body.appendChild(firework);
+            setTimeout(() => firework.remove(), 600);
+        });
+
+        const style = document.createElement('style');
+        style.textContent = '@keyframes firework { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(20); opacity: 0; } }';
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
