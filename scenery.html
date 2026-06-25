@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>景点大全 - 老君山</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:400,500,700&display=swap">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-color: #c8102e; --text-color: #333; --bg-color: #f8f9fa;
+            --card-bg: rgba(255,255,255,0.95); --shadow: 0 2px 15px rgba(0,0,0,0.08);
+        }
+        body { font-family: "Noto Sans SC", sans-serif; background: var(--bg-color); }
+        #header-nav {
+            position: fixed; top:0; left:0; width:100%; height:60px;
+            background: rgba(255,255,255,0.95); box-shadow: var(--shadow);
+            display: flex; align-items: center; justify-content: space-between;
+            padding:0 50px; z-index: 1000;
+        }
+        .nav-logo { font-size:22px; font-weight:700; color:var(--primary-color); text-decoration:none; }
+        #main-nav { display:flex; list-style:none; }
+        .main-nav-item { margin-left:35px; }
+        .main-nav-link { color:#333; text-decoration:none; font-weight:500; }
+        .main-nav-link:hover { color:var(--primary-color); }
+
+        .container { max-width:1200px; margin:0 auto; padding:100px 20px; }
+        .page-title { text-align:center; font-size:30px; color:var(--primary-color); margin-bottom:40px; }
+        .grid { display:grid; grid-template-columns: repeat(3,1fr); gap:25px; }
+        .card { background:var(--card-bg); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); }
+        .card img { width:100%; height:200px; object-fit:cover; }
+        .info { padding:20px; }
+        .name { font-size:18px; font-weight:500; margin-bottom:10px; }
+        .desc { color:#666; font-size:14px; margin-bottom:15px; }
+        .btn {
+            padding:8px 15px; background:var(--primary-color); color:#fff;
+            border:none; border-radius:6px; cursor:pointer;
+        }
+        @media (max-width:768px) {
+            .grid { grid-template-columns:1fr; }
+            #header-nav { padding:0 20px; }
+            .main-nav-item { margin-left:20px; }
+        }
+    </style>
+</head>
+<body>
+    <nav id="header-nav">
+        <a href="index.html" class="nav-logo">老君山</a>
+        <ul id="main-nav">
+            <li class="main-nav-item"><a href="index.html" class="main-nav-link">首页</a></li>
+            <li class="main-nav-item"><a href="scenery.html" class="main-nav-link">景点大全</a></li>
+            <li class="main-nav-item"><a href="ticket.html" class="main-nav-link">门票预订</a></li>
+            <li class="main-nav-item"><a href="hotel.html" class="main-nav-link">酒店住宿</a></li>
+            <li class="main-nav-item"><a href="comment.html" class="main-nav-link">游客评价</a></li>
+            <li class="main-nav-item"><a href="user.html" class="main-nav-link">个人中心</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h2 class="page-title">老君山景点大全</h2>
+        <div class="grid" id="list"></div>
+    </div>
+
+    <script>
+        const data = [
+            {
+                name:"金顶道观群",
+                desc:"老君山标志性建筑，仙气十足",
+                img:"金顶道观群.png"
+            },
+            {
+                name:"十里画屏",
+                desc:"一步一景，被誉为北国张家界",
+                img:"十里画屏.png"
+            },
+            {
+                name:"云海日出",
+                desc:"摄影必打卡，人间仙境",
+                img:"云海日出.png"
+            },
+            {
+                name:"追梦谷",
+                desc:"峡谷风光，刺激体验",
+                img:"追梦谷.png"
+            },
+            {
+                name:"老君庙",
+                desc:"千年古观，道教圣地",
+                img:"老君庙.png"
+            },
+            {
+                name:"马鬃岭",
+                desc:"最高峰，俯瞰全景",
+                img:"马鬃峰.png"
+            }
+        ];
+        let html = '';
+        data.forEach((item,idx)=>{
+            html+=`
+            <div class="card">
+                <img src="${item.img}" alt="${item.name}">
+                <div class="info">
+                    <div class="name">${item.name}</div>
+                    <div class="desc">${item.desc}</div>
+                    <button class="btn" onclick="collect(${idx})">收藏景点</button>
+                </div>
+            </div>`;
+        });
+        document.getElementById("list").innerHTML = html;
+
+        function collect(idx){
+            let arr = JSON.parse(localStorage.getItem('collect')||'[]');
+            arr.push(data[idx]);
+            localStorage.setItem('collect',JSON.stringify(arr));
+            alert('收藏成功！可前往个人中心查看');
+        }
+    </script>
+</body>
+</html>
