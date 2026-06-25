@@ -4,63 +4,185 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>游客评价 - 老君山</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:400,500,700&display=swap">
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        :root{--primary:#c8102e;--bg:#f8f9fa}
-        body{font-family:"Noto Sans SC",sans-serif;background:var(--bg)}
-        #header-nav{position:fixed;top:0;left:0;width:100%;height:60px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 50px;z-index:1000}
-        .nav-logo{color:var(--primary);font-size:22px;font-weight:700;text-decoration:none}
-        #main-nav{display:flex;list-style:none}
-        .main-nav-item{margin-left:35px}
-        .main-nav-link{color:#333;text-decoration:none}
-        .container{max-width:800px;margin:0 auto;padding:100px 20px}
-        .box{background:#fff;padding:20px;border-radius:12px;margin-bottom:20px}
-        textarea{width:100%;height:100px;padding:10px;border:1px solid #ddd;border-radius:6px}
-        .btn{background:var(--primary);color:#fff;border:none;padding:10px 15px;border-radius:6px;cursor:pointer}
-        .item{border-bottom:1px solid #eee;padding:10px 0}
-        .name{font-weight:500}
-        .content{margin:5px 0;color:#666}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-color: #c8102e;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: rgba(255,255,255,0.95);
+            --shadow: 0 2px 15px rgba(0,0,0,0.08);
+        }
+        body {
+            font-family: "Noto Sans SC", sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+        #header-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(255,255,255,0.95);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 50px;
+            z-index: 1000;
+        }
+        .nav-logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        #main-nav { display: flex; list-style: none; }
+        .main-nav-item { margin-left: 35px; }
+        .main-nav-link {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .main-nav-link:hover { color: var(--primary-color); }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 100px 20px 40px;
+        }
+        .page-title {
+            text-align: center;
+            font-size: 30px;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+        }
+        .box {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+        .section-title {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font: inherit;
+            resize: vertical;
+            outline: none;
+        }
+        textarea:focus { border-color: var(--primary-color); }
+        .btn {
+            margin-top: 12px;
+            padding: 10px 18px;
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .comment-item + .comment-item { margin-top: 16px; }
+        .comment-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        .name { font-weight: 500; }
+        .time { font-size: 12px; color: #999; }
+        .content { color: #666; line-height: 1.7; }
+        .empty {
+            text-align: center;
+            color: #888;
+            padding: 20px 0;
+        }
+        @media (max-width: 768px) {
+            #header-nav { padding: 0 20px; }
+            .main-nav-item { margin-left: 20px; }
+            .page-title { font-size: 26px; }
+        }
     </style>
 </head>
 <body>
     <nav id="header-nav">
         <a href="index.html" class="nav-logo">老君山</a>
         <ul id="main-nav">
-            <li class="main-nav-item"><a href="index.html">首页</a></li>
-            <li class="main-nav-item"><a href="scenery.html">景点</a></li>
-            <li class="main-nav-item"><a href="ticket.html">门票</a></li>
-            <li class="main-nav-item"><a href="hotel.html">酒店</a></li>
-            <li class="main-nav-item"><a href="comment.html">评价</a></li>
-            <li class="main-nav-item"><a href="user.html">我的</a></li>
+            <li class="main-nav-item"><a href="index.html" class="main-nav-link">首页</a></li>
+            <li class="main-nav-item"><a href="scenery.html" class="main-nav-link">景点大全</a></li>
+            <li class="main-nav-item"><a href="ticket.html" class="main-nav-link">门票预订</a></li>
+            <li class="main-nav-item"><a href="hotel.html" class="main-nav-link">酒店住宿</a></li>
+            <li class="main-nav-item"><a href="comment.html" class="main-nav-link">游客评价</a></li>
+            <li class="main-nav-item"><a href="user.html" class="main-nav-link">个人中心</a></li>
         </ul>
     </nav>
 
     <div class="container">
+        <h2 class="page-title">游客评价</h2>
         <div class="box">
-            <h3 style="margin-bottom:15px;color:var(--primary)">发表评价</h3>
+            <h3 class="section-title">发表评价</h3>
             <textarea id="msg" placeholder="分享你的游玩体验"></textarea>
-            <button class="btn" onclick="send()" style="margin-top:10px">发布</button>
+            <button class="btn" onclick="send()">发布</button>
         </div>
         <div id="list"></div>
     </div>
 
     <script>
-        function send(){
-            let val = document.getElementById('msg').value;
-            if(!val)return alert('请输入内容');
-            let arr = JSON.parse(localStorage.getItem('comment')||'[]');
-            arr.push({content:val,time:new Date().toLocaleString()});
-            localStorage.setItem('comment',JSON.stringify(arr));
+        function escapeHtml(text) {
+            return String(text).replace(/[&<>"']/g, function(char) {
+                return {
+                    "&": "&amp;",
+                    "<": "&lt;",
+                    ">": "&gt;",
+                    '"': "&quot;",
+                    "'": "&#39;"
+                }[char];
+            });
+        }
+
+        function send() {
+            const input = document.getElementById("msg");
+            const val = input.value.trim();
+            if (!val) {
+                alert("请输入内容");
+                return;
+            }
+            const arr = JSON.parse(localStorage.getItem("comment") || "[]");
+            arr.unshift({ content: val, time: new Date().toLocaleString() });
+            localStorage.setItem("comment", JSON.stringify(arr));
+            input.value = "";
             show();
         }
-        function show(){
-            let arr = JSON.parse(localStorage.getItem('comment')||'[]');
-            let html='';
-            arr.forEach(i=>{
-                html+=`<div class="box"><div class="name">游客</div><div class="content">${i.content}</div><div style="font-size:12px;color:#999">${i.time}</div></div>`;
-            });
-            document.getElementById('list').innerHTML=html;
+
+        function show() {
+            const arr = JSON.parse(localStorage.getItem("comment") || "[]");
+            if (!arr.length) {
+                document.getElementById("list").innerHTML = '<div class="box empty">还没有评价，写下第一条体验吧。</div>';
+                return;
+            }
+            const html = arr.map(function(item) {
+                return `
+                    <div class="box comment-item">
+                        <div class="comment-head">
+                            <div class="name">游客</div>
+                            <div class="time">${escapeHtml(item.time || "")}</div>
+                        </div>
+                        <div class="content">${escapeHtml(item.content || "")}</div>
+                    </div>
+                `;
+            }).join("");
+            document.getElementById("list").innerHTML = html;
         }
+
         show();
     </script>
 </body>
